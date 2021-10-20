@@ -1,15 +1,17 @@
-import { useRouter } from 'next/dist/client/router'
+import dynamic from "next/dynamic"
 import Image from 'next/image'
-import { createContext } from 'react'
-import { useState } from 'react/cjs/react.development'
-import BackButton from '../../components/BackButton'
-import CatchPokemonModal from '../../components/CatchPokemonModal'
-import PokeBall from '../../components/PokeBall'
-import PokemonStatsTabs from '../../components/PokemonStatsTabs'
+import { useRouter } from 'next/router'
+import { createContext, useState } from 'react'
 import { GET_POKEMON_DETAIL } from '../../shared/graphql'
 import { Flex, PokemonType, Text, Title } from '../../styles/components'
 import { Container, PokemonDetailContainer, PokemonStatsContainer } from '../../styles/containers'
 import client from '../../utils/apollo'
+import Head from 'next/head'
+
+const BackButton = dynamic(() => import("../../components/BackButton"));
+const CatchPokemonModal = dynamic(() => import("../../components/CatchPokemonModal"));
+const PokeBall = dynamic(() => import("../../components/PokeBall"));
+const PokemonStatsTabs = dynamic(() => import("../../components/PokemonStatsTabs"));
 
 const typeColor = {
   normal: 'black',
@@ -34,7 +36,7 @@ const typeColor = {
 
 export const ColorContext = createContext({})
 
-const PokemonDetail = ({ data, error }) => {
+export default function PokemonDetail({ data }) {
   // const [pokemons, setPokemons] = useState(data)
   // const [loading, setLoading] = useState(false)
   const router = useRouter()
@@ -72,6 +74,10 @@ const PokemonDetail = ({ data, error }) => {
 
   return (
       <ColorContext.Provider value={valueProvider}>
+        <Head>
+          <title>{`${data.name} | POKEMON CATCH EM ALL!`}</title>
+          <meta name="description" content="Pokemon detail page"/>
+        </Head>
         <PokemonDetailContainer color={typeColor[data.types[0]?.type.name]}>
         <Container>
           <BackButton/>
@@ -82,13 +88,13 @@ const PokemonDetail = ({ data, error }) => {
           <Flex ai="center" style={{width: '100%', marginBottom: '20px'}} wrap="wrap">
               {data.types.map((el, i) => <PokemonType key={i} color={typeColor[el.type.name]}>{el.type.name}</PokemonType>)}
           </Flex>
-          <Image src={router.query.img} width={180} height={180} placeholder="blur" blurDataURL/>
+          <Image src={router.query.img} width={180} height={180} alt={data.name} />
           <PokemonStatsContainer>
             <Flex jc="center" ai="center" wrap="wrap">
-              {data?.sprites?.front_default && <Image src={data?.sprites?.front_default} width={72} height={72} placeholder="blur" blurDataURL/>}
-              {data?.sprites?.back_default && <Image src={data?.sprites?.back_default} width={72} height={72} placeholder="blur" blurDataURL/>}
-              {data?.sprites?.front_female && <Image src={data?.sprites?.front_female} width={72} height={72} placeholder="blur" blurDataURL/>}
-              {data?.sprites?.back_female && <Image src={data?.sprites?.back_female} width={72} height={72} placeholder="blur" blurDataURL/>}
+              {data?.sprites?.front_default && <Image alt="front sprite" src={data?.sprites?.front_default} width={72} height={72}/>}
+              {data?.sprites?.back_default && <Image alt="back sprite" src={data?.sprites?.back_default} width={72} height={72}/>}
+              {data?.sprites?.front_female && <Image alt="front sprite female" src={data?.sprites?.front_female} width={72} height={72}/>}
+              {data?.sprites?.back_female && <Image alt="back sprite female" src={data?.sprites?.back_female} width={72} height={72}/>}
             </Flex>
             <PokemonStatsTabs data={data}/>
           </PokemonStatsContainer>
@@ -104,7 +110,7 @@ const PokemonDetail = ({ data, error }) => {
   )
 }
 
-export const getServerSideProps = async (context) => {
+export async function getServerSideProps(context) {
     const { data, error} = await client.query({ query: GET_POKEMON_DETAIL, variables: { name: context.params.pokemon } })
     
     if(!data.pokemon.id || error) {
@@ -117,5 +123,3 @@ export const getServerSideProps = async (context) => {
         props: { data: data.pokemon }
     }
 }
-
-export default PokemonDetail

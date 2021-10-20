@@ -54,16 +54,17 @@ export const fall = keyframes`
 
 export const Button = styled.button`
   font-family: ${({ pixelated }) => pixelated && "'Press Start 2P', cursive"};
-  font-size: ${({ size }) => size ? (size + 'px') : '12px'};
-  padding: ${({ pixelated }) => pixelated ? "8px 12px" : '2px 12px'};
-  border-radius: ${({ pixelated }) => pixelated ? "12px" : '8px'};
+  font-size: ${({ size }) => size ? (size + 'px') : '14px'};
+  padding: ${({ pixelated }) => pixelated ? "8px 12px" : '2px 14px'};
+  border-radius: ${({ pixelated }) => pixelated ? "14px" : '8px'};
   background: ${({ color }) => colors[color] || colors.warm};
   cursor: pointer;
   font-weight: ${({ pixelated }) => pixelated ? '400' : '500'};
   color: ${({ text }) => text};
   border: solid ${({ size }) => size >= 24 ? size/12 + 'px' : '2px'} black;
   margin: ${({mb, mt, mr, ml}) => (mt || '0') + 'px ' + (mr || '0') + 'px ' + (mb || '0') + 'px ' + (ml || '0') + 'px '};
-
+  min-height: 48px;
+  min-width: 48px;
   &:hover {
     animation: ${bounce} 0.8s infinite ease-in-out alternate;
   }
@@ -84,7 +85,7 @@ export const Flex = styled.div`
 export const Title = styled.h1`
   font-family: ${({ pixelated }) => pixelated && "'Press Start 2P', cursive"};
   font-weight: ${({ pixelated, weight }) => pixelated || !weight ? '400' : weight};
-  font-size: ${({ size }) => size ? (size + 'px') : '12px'};
+  font-size: ${({ size }) => size ? (size + 'px') : '14px'};
   color: ${({ color }) => colors[color] || colors.blacker};
   margin: ${({mb, mt, mr, ml}) => (mt || '0') + 'px ' + (mr || '0') + 'px ' + (mb || '0') + 'px ' + (ml || '0') + 'px '};
   text-align: ${({center}) => center && 'center'};
@@ -93,7 +94,7 @@ export const Title = styled.h1`
 export const SubTitle = styled.h2`
   font-family: ${({ pixelated }) => pixelated && "'Press Start 2P', cursive"};
   font-weight: ${({ pixelated, weight }) => pixelated || !weight ? '400' : weight};
-  font-size: ${({ size }) => size ? (size + 'px') : '12px'};
+  font-size: ${({ size }) => size ? (size + 'px') : '14px'};
   color: ${({ color }) => colors[color] || colors.blacker};
   margin: ${({mb, mt, mr, ml}) => (mt || '0') + 'px ' + (mr || '0') + 'px ' + (mb || '0') + 'px ' + (ml || '0') + 'px '};
   text-align: ${({center}) => center && 'center'};
@@ -102,7 +103,7 @@ export const SubTitle = styled.h2`
 export const Text = styled.p`
   font-family: ${({ pixelated }) => pixelated && "'Press Start 2P', cursive"};
   font-weight: ${({ pixelated, weight }) => pixelated || !weight ? '400' : weight};
-  font-size: ${({ size }) => size ? (size + 'px') : '12px'};
+  font-size: ${({ size }) => size ? (size + 'px') : '14px'};
   color: ${({ color }) => colors[color] || colors.blacker};
   margin: ${({mb, mt, mr, ml}) => (mt || '0') + 'px ' + (mr || '0') + 'px ' + (mb || '0') + 'px ' + (ml || '0') + 'px '};
   text-align: ${({center}) => center && 'center'};
@@ -110,7 +111,7 @@ export const Text = styled.p`
 
 export const PokemonType = styled.p`
  font-weight: 500;
- font-size: 12px;
+ font-size: 14px;
  padding: 4px 12px;
  margin-right: 8px;
  background-color: ${({ color }) => colors[color]};
@@ -259,6 +260,7 @@ export const PokemonStatsWrapper = styled.div`
     transition: width 1s ease;
     height: 20px;
     width: ${({value, maxStats}) => value*100/maxStats + '%'};
+    background: ${({color}) => colors[color]}
   }
 `
 
@@ -324,4 +326,5 @@ export const MyForm = styled.input`
   padding: 4px;
   margin: 24px 0 0 0 ;
   border-radius: 4px;
+  font-size: 14px;
 `

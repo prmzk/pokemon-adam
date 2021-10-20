@@ -55,7 +55,7 @@ export const PokemonStatsContainer = styled.div`
     border-radius: 20px 20px 0 0;
     display: flex;
     flex-direction: column;
-    padding: 40px 16px 120px 16px;
+    padding: 40px 16px 180px 16px;
     width: calc(100% );
     margin-top: -40px;
     flex-grow: 1;

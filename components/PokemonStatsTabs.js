@@ -1,9 +1,8 @@
-import React, { useContext } from 'react'
-import {Tabs, Tab, TabList, TabPanel} from 'react-tabs'
-import { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { Tab, TabList, TabPanel, Tabs } from 'react-tabs'
+import { ColorContext } from '../pages/pokemon/[pokemon]'
 import { TabStyle } from '../styles/components'
 import PokemonStatsBar from './PokemonStatsBar'
-import { ColorContext } from '../pages/pokemon/[pokemon]'
 
 function PokemonStatsTabs({data}) {
     const { color } = useContext(ColorContext)
@@ -15,12 +14,14 @@ function PokemonStatsTabs({data}) {
     return (
         <Tabs defaultIndex={tabIndex} onSelect={index => setTabIndex(index)} css={TabStyle}>
             <TabList>
-                <Tab style={{borderColor: color}} className={tabIndex === 0 && 'selected'}>About</Tab>
-                <Tab style={{borderColor: color}} className={tabIndex === 1 && 'selected'}>Stats</Tab>
-                <Tab style={{borderColor: color}} className={tabIndex === 2 && 'selected'}>Moves</Tab>
-                <Tab style={{borderColor: color}} className={tabIndex === 3 && 'selected'}>Abilities</Tab>
+                <Tab style={{borderColor: color}} className={tabIndex === 0 ? 'selected' : ''}>About</Tab>
+                <Tab style={{borderColor: color}} className={tabIndex === 1 ? 'selected' : ''}>Stats</Tab>
+                <Tab style={{borderColor: color}} className={tabIndex === 2 ? 'selected' : ''}>Moves</Tab>
+                <Tab style={{borderColor: color}} className={tabIndex === 3 ? 'selected' : ''}>Abilities</Tab>
             </TabList>
-            <TabPanel className={tabIndex === 0 && 'panel-selected'}>
+
+            {/* ABOUT */}
+            <TabPanel className={tabIndex === 0 ? 'panel-selected' : ''}>
                 <div className='stats-wrapper'>
                     <div>
                         <h2>Base Exp.</h2>
@@ -36,7 +37,9 @@ function PokemonStatsTabs({data}) {
                     </div>
                 </div>
             </TabPanel>
-            <TabPanel className={tabIndex === 1 && 'panel-selected'}>
+
+            {/* BASIC STATS */}
+            <TabPanel className={tabIndex === 1 ? 'panel-selected' : ''}>
                 <div className='stats-wrapper'>
                     {data.stats.map((el, i) => <div key={i}>
                         <h2>{el.stat.name}</h2>
@@ -44,14 +47,18 @@ function PokemonStatsTabs({data}) {
                     </div>)}
                 </div>
             </TabPanel>
-            <TabPanel className={tabIndex === 2 && 'panel-selected'}>
+
+            {/* MOVES */}
+            <TabPanel className={tabIndex === 2 ? 'panel-selected' : ''}>
                 <div className='moves-wrapper'>
                     {data.moves.map(({ move: { name } }, i) => <div key={i} style={{borderColor: color}}>
                         <p>{name}</p>
                     </div>)}
                 </div>
             </TabPanel>
-            <TabPanel className={tabIndex === 3 && 'panel-selected'}>
+
+            {/* ABILITIES */}
+            <TabPanel className={tabIndex === 3 ? 'panel-selected' : ''}>
                 <div className='moves-wrapper'>
                     {data.abilities.map(({ ability: { name } }, i) => <div key={i} style={{borderColor: color}}>
                         <p>{name}</p>

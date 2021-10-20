@@ -1,9 +1,8 @@
-import React from 'react'
-import Modal from 'react-modal'
-import { Button, Flex, Form, ModalDiv, MyForm, Text } from '../styles/components'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
-import { useState } from 'react/cjs/react.development'
+import React, { useState } from 'react'
+import Modal from 'react-modal'
+import { Button, Flex, ModalDiv, MyForm, Text } from '../styles/components'
 
 function CatchPokemonModal({modalOpen, closeModal, modalStatus, data}) {
     const router = useRouter()
@@ -95,16 +94,19 @@ function CatchPokemonModal({modalOpen, closeModal, modalStatus, data}) {
         contentLabel="Modal Sharing"
       >
         <Flex dir="column" ai="center">
+          {/* CATCHING ANIMATION */}
           {modalStatus === 'catching' && <>
-            <Image src="/images/catch.gif" height={300} width={300}/>
+            <Image src="/images/catch.gif" height={300} width={300} alt='ash throwing a pokeball'/>
             <Text mt={20} size={28} center color='white'>YOU THROW A POKEBALL AT EM!</Text>
           </>}
+
+          {/* SUCCESS */}
           {modalStatus === 'success' && <ModalDiv>
             <Flex ai="center" style={{marginBottom: 20}}>
                 <h2 className='success'>Success!</h2>
-                <Image src="/images/poggies.webp" width={28} height={28}/>
+                <Image src="/images/poggies.webp" width={28} height={28} alt='WOW'/>
             </Flex>
-            <Image src={router.query.img} width={120} height={120} placeholder="blur" blurDataURL/>
+            <Image src={router.query.img} width={120} height={120} placeholder="blur" blurDataURL alt={data.name}/>
             <Text size={20} mt={32}>{`You caught ${data.name}!`}</Text>
             <Text size={14} mt={8} center>After you give it a name and click OK, you can see it on your owned pokemon!</Text>
             <form onSubmit={savePokemon} style={{width: '100%', display: 'flex', flexDirection:'column', alignItems:'center'}}>
@@ -116,11 +118,13 @@ function CatchPokemonModal({modalOpen, closeModal, modalStatus, data}) {
               </Flex>
             </form>
           </ModalDiv>}
+
+          {/* FAIL */}
           {modalStatus === 'fail' && <ModalDiv>
             <Flex ai="center" style={{marginBottom: 20}}>
                 <h2 className='fail'>Fail!</h2>
             </Flex>
-            <Image src="/images/feelsbadman.webp" width={120} height={120} placeholder="blur" blurDataURL/>
+            <Image src="/images/feelsbadman.webp" width={120} height={120} alt='sigh'/>
             <Text size={20} mt={32} mb={32}>{`You failed, try again!`}</Text>
             <Button color='red' onClick={closeModal}>OK</Button>
           </ModalDiv>}

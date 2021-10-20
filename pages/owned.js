@@ -1,11 +1,13 @@
-import BackButton from '../components/BackButton'
-import { Button, Pokemons, Text, Title } from '../styles/components'
-import { BgContainer, Container } from '../styles/containers'
+import dynamic from "next/dynamic"
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
-import OwnedPokemonList from '../components/OwnedPokemonList'
+import { useEffect, useState } from 'react'
+import BackButton from '../components/BackButton'
+import { Pokemons, Text, Title } from '../styles/components'
+import { BgContainer, Container } from '../styles/containers'
+import Head from 'next/head'
+const OwnedPokemonList = dynamic(() => import("../components/OwnedPokemonList"));
 
-const Owned = () => {
+export default function Owned() {
   const [pokemons, setPokemons] = useState([])
 
   const releasePokemon = (givenName) => {
@@ -36,15 +38,18 @@ const Owned = () => {
   }, [])
   
 
-  console.log(pokemons)
-
   return (
       <BgContainer>
+        <Head>
+          <title>Your Pokemon | POKEMON CATCH EM ALL!</title>
+          <meta name="description" content="Pokemon owned by user"/>
+        </Head>
         <Container style={{padding: '40px 16px', minHeight: '100vh', justifyContent: 'flex-start'}}>
             <BackButton/>
             <Title pixelated mt={24} mb={24} size={24} center>Your Pokemon</Title>
             {pokemons?.length === 0 ? <>
-              <Image src="/images/ash.webp" width={140} height={322}/>
+              {/* EMPTY STATA */}
+              <Image src="/images/ash.webp" width={140} height={322} alt="ash"/>
               <Text size={28} center mt={20}>You dont have any pokemon! Start exploring the world!</Text>
             </> : 
             <Pokemons>
@@ -56,5 +61,3 @@ const Owned = () => {
       </BgContainer>
   )
 }
-
-export default Owned

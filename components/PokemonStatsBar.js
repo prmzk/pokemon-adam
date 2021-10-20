@@ -1,8 +1,7 @@
-import React, { useContext } from 'react'
-import { useEffect, useState } from 'react/cjs/react.development'
-import { Flex, PokemonStatsWrapper } from '../styles/components';
+import React, { useContext, useEffect, useState } from 'react';
 import CountUp from 'react-countup';
 import { ColorContext } from '../pages/pokemon/[pokemon]';
+import { Flex, PokemonStatsWrapper } from '../styles/components';
 
 function PokemonStatsBar({data, maxStats}) {
     const { color } = useContext(ColorContext)
@@ -15,8 +14,8 @@ function PokemonStatsBar({data, maxStats}) {
     return (
         <Flex style={{width: '100%'}} ai={'center'}>
             <CountUp end={data} duration={1} style={{marginRight: 12, width: '60px', textAlign: 'right', fontSize: '12px', fontWeight: '500'}}/>
-            <PokemonStatsWrapper value={value} maxStats={maxStats + 20}>
-                <div style={{background: color}}/>
+            <PokemonStatsWrapper value={value} maxStats={maxStats + 20} color={color}>
+                <div/>
             </PokemonStatsWrapper>
         </Flex>
         
